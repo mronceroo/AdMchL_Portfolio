@@ -12,11 +12,11 @@ class_names = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
                "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
 
 # Show some training images
-plt.figure(figsize=(10, 10))
-for i in range(4):
-    plt.subplot(1, 4, i+1)
+plt.figure(figsize=(10, 5))
+for i in range(10):
+    plt.subplot(2, 5, i+1)
     img = (train_images[i] + 1) / 2  # Scale back to [0,1] for display
     plt.imshow(img)
-    plt.title(class_names[train_labels[i][0]])
+    plt.title(class_names[train_labels[i]])
     plt.axis('off')
 plt.show()
