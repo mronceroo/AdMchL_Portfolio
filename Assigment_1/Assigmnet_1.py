@@ -5,7 +5,7 @@ import numpy as np
 import tf2onnx
 import onnx
 from onnx_tf.backend import prepare
-
+import keras2onnx
 
 #Preprocessing
 
@@ -64,11 +64,7 @@ test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
 print(f'Test accuracy: {test_acc*100:.2f}%')
 
 #Save model with ONNX
-model.save("Manuel_Roncero_CNN")
+onnx_model = keras2onnx.convert.from_keras(model)
 
-saved_model_path = "Manuel_Roncero_CNN"
 onnx_model_path = "Manuel_Roncero_CNN.onnx"
-
-# Convertir el modelo SavedModel a ONNX
-onnx_model = prepare(tf.saved_model.load(saved_model_path))
-onnx_model.export_graph(onnx_model_path)
+keras2onnx.save_model(onnx_model, onnx_model_path)
