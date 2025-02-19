@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tf2onnx
 
+
 #Preprocessing
 
 (train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.fashion_mnist.load_data()
