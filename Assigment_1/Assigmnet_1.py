@@ -62,10 +62,6 @@ history = model.fit(train_images, train_labels,
 test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
 print(f'Test accuracy: {test_acc*100:.2f}%')
 
-#Save model with ONNX
+#Save model with HDF5
 
-onnx_model_path = "Manuel_Rocnero_CNN.onnx"
-
-onnx_model = tf2onnx.convert.from_keras(model)
-
-onnx.save_model(onnx_model, onnx_model_path)
+model.save("Manuel_Roncero_CNN.h5")
