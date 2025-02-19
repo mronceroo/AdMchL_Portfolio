@@ -36,8 +36,6 @@ model = models.Sequential([
     layers.Conv2D(64, (3, 3), activation='relu'),#Conv Layer Number filter
     layers.MaxPooling2D((2, 2)),
     layers.Conv2D(128, (3, 3), activation='relu'),#Conv Layer
-    layers.MaxPooling2D((2, 2)),
-    layers.Conv2D(256, (3, 3), activation='relu'),#Conv Layer
     layers.Flatten(),
     layers.Dense(256, activation='relu'),
     layers.Dropout(0.5),#Prevent overfitting
