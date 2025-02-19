@@ -24,3 +24,8 @@ while True:
     # Normalize img
     img = (resized.astype('float32') / 255) * 2 - 1
     img = img.reshape(1, 28, 28, 1)  
+    
+    # Aplyy model to do predictions
+    predictions = model.predict(img)
+    predicted_class = np.argmax(predictions)
+    class_label = class_names[predicted_class]
