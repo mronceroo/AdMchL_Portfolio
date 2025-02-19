@@ -67,7 +67,7 @@ onnx_model_path = "Manuel_Roncero_CNN_GOAT.onnx"
 
 spec = (tf.TensorSpec((None, 28, 28, 1), tf.float32, name="input"),)  
 
-onnx_model, _ = tf2onnx.convert.from_keras(model, input_signature=spec)
+onnx_model, _ = tf2onnx.convert.from_keras(model, input_signature=spec, opset=13)
 
 with open(onnx_model_path, "wb") as f:
     f.write(onnx_model.SerializeToString())
