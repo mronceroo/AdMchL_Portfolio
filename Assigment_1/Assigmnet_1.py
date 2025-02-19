@@ -54,7 +54,7 @@ model.compile(optimizer=optimizer,
               metrics=['accuracy'])
 
 history = model.fit(train_images, train_labels,
-                    epochs=30,
+                    epochs=2,
                     batch_size=32,
                     validation_data=(test_images, test_labels))
 
@@ -63,11 +63,13 @@ print(f'Test accuracy: {test_acc*100:.2f}%')
 
 #Save model with ONNX
 
+full_model = tf.function(lambda x: model(x))
+full_model = full_model.get_concrete_function(tf.TensorSpec([None, 28, 28, 1], tf.float32))
+
 onnx_model_path = "Manuel_Roncero_CNN_GOAT.onnx"
 
-spec = (tf.TensorSpec((None, 28, 28, 1), tf.float32, name="input"),)  
-
-onnx_model, _ = tf2onnx.convert.from_keras(model, input_signature=spec, opset=13)
-
-with open(onnx_model_path, "wb") as f:
-    f.write(onnx_model.SerializeToString())
+model_proto, _ = tf2onnx.convert.from_function(
+    full_model, 
+    opset=13, 
+    output_path=onnx_model_path
+)
