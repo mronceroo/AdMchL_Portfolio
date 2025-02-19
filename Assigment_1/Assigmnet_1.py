@@ -2,6 +2,7 @@ import tensorflow as tf
 from keras import datasets, layers, models, optimizers, losses
 import matplotlib.pyplot as plt
 import numpy as np
+import tf2onnx
 
 #Preprocessing
 
@@ -58,3 +59,14 @@ history = model.fit(train_images, train_labels,
 
 test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
 print(f'Test accuracy: {test_acc*100:.2f}%')
+
+#Save model with ONNX
+
+onnx_model_path = "Manuel_Roncero_CNN_GOAT.onnx"
+
+spec = (tf.TensorSpec((None, 28, 28, 1), tf.float32, name="input"),)  
+
+onnx_model, _ = tf2onnx.convert.from_keras(model, input_signature=spec)
+
+with open(onnx_model_path, "wb") as f:
+    f.write(onnx_model.SerializeToString())
