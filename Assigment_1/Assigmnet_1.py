@@ -1,11 +1,10 @@
 import tensorflow as tf
+from tensorflow import keras
 from keras import datasets, layers, models, optimizers, losses
 import matplotlib.pyplot as plt
 import numpy as np
 import tf2onnx
 import onnx
-from onnx_tf.backend import prepare
-import keras2onnx
 
 #Preprocessing
 
@@ -64,7 +63,9 @@ test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
 print(f'Test accuracy: {test_acc*100:.2f}%')
 
 #Save model with ONNX
-onnx_model = keras2onnx.convert.from_keras(model)
 
-onnx_model_path = "Manuel_Roncero_CNN.onnx"
-keras2onnx.save_model(onnx_model, onnx_model_path)
+onnx_model_path = "Manuel_Rocnero_CNN.onnx"
+
+onnx_model = tf2onnx.convert.from_keras(model)
+
+onnx.save_model(onnx_model, onnx_model_path)
