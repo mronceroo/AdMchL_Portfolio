@@ -35,7 +35,7 @@ while True:
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
     
-    cv2.imshow("Fashion MNIST Classifier", frame)
+    cv2.imshow("Manuel_Roncero_CNN", frame)
 
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
