@@ -63,13 +63,10 @@ print(f'Test accuracy: {test_acc*100:.2f}%')
 
 #Save model with ONNX
 
-full_model = tf.function(lambda x: model(x))
-full_model = full_model.get_concrete_function(tf.TensorSpec([None, 28, 28, 1], tf.float32))
+input_signature = [tf.TensorSpec([None, 28, 28, 1], tf.float32, name="input")]
 
 onnx_model_path = "Manuel_Roncero_CNN_GOAT.onnx"
+model_proto, _ = tf2onnx.convert.from_keras(model, opset=13, input_signature=input_signature)
 
-model_proto, _ = tf2onnx.convert.from_function(
-    full_model, 
-    opset=13, 
-    output_path=onnx_model_path
-)
+with open(onnx_model_path, "wb") as f:
+    f.write(model_proto.SerializeToString())
