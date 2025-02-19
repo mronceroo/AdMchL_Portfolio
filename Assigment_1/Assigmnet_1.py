@@ -31,14 +31,18 @@ train_images = train_images.reshape(-1, 28, 28, 1)
 test_images = test_images.reshape(-1, 28, 28, 1)
 
 model = models.Sequential([
-    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+    layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),#Conv Layer
     layers.MaxPooling2D((2, 2)),
-    layers.Conv2D(64, (3, 3), activation='relu'),
+    layers.Conv2D(64, (3, 3), activation='relu'),#Conv Layer Number filter
     layers.MaxPooling2D((2, 2)),
-    layers.Conv2D(128, (3, 3), activation='relu'),
+    layers.Conv2D(128, (3, 3), activation='relu'),#Conv Layer
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(256, (3, 3), activation='relu'),#Conv Layer
     layers.Flatten(),
+    layers.Dense(256, activation='relu'),
+    layers.Dropout(0.5),#Prevent overfitting
     layers.Dense(128, activation='relu'),
-    layers.Dense(84, activation='relu'),
+    layers.Dropout(0.5),
     layers.Dense(10)
 ])
 
@@ -50,8 +54,8 @@ model.compile(optimizer=optimizer,
               metrics=['accuracy'])
 
 history = model.fit(train_images, train_labels,
-                    epochs=2,
-                    batch_size=4,
+                    epochs=30,
+                    batch_size=32,
                     validation_data=(test_images, test_labels))
 
 test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
