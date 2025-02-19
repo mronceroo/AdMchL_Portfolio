@@ -55,7 +55,7 @@ model.compile(optimizer=optimizer,
               metrics=['accuracy'])
 
 history = model.fit(train_images, train_labels,
-                    epochs=30,
+                    epochs=64,
                     batch_size=32,
                     validation_data=(test_images, test_labels))
 
