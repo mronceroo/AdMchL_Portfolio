@@ -4,7 +4,7 @@ from keras import datasets, layers, models, optimizers, losses
 import numpy as np
 
 
-model = keras.models.load_model("Manuel_Roncero_CNN.h5")
+model = keras.models.load_model("Assigment_1/Manuel_Roncero_CNN.h5")
 
 # Freeze last layers
 for layer in model.layers[:-1]:
