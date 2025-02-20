@@ -11,8 +11,8 @@ for layer in model.layers[:-1]:
     layer.trainable = False
 
 # New model without the last layer
-model_mnist = models.Sequential(model.layers[:-1])  # Copia todas menos la última
-model_mnist.add(layers.Dense(10, activation='softmax', name="dense_mnist"))  # Nueva capa para MNIST
+model_mnist = models.Sequential(model.layers[:-1])  
+model_mnist.add(layers.Dense(10, activation='softmax', name="dense_mnist"))  
 
 
 model_mnist.compile(optimizer=optimizers.Adam(learning_rate=0.001),
@@ -48,9 +48,10 @@ model_cifar10.add(layers.MaxPooling2D((2, 2)))
 model_cifar10.add(layers.Conv2D(128, (3, 3), activation='relu'))
 
 model_cifar10.add(layers.GlobalAveragePooling2D())
+model_cifar10.add(layers.Dense(256, activation='relu'))
 
 # Copy middle layers of the pprevious model
-for layer in model_mnist.layers[-3:]:  
+for layer in model_mnist.layers[-2:]:  
     model_cifar10.add(layer)
 
 
