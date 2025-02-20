@@ -27,7 +27,7 @@ test_images = (test_images.astype('float32') / 255) * 2 - 1
 test_images = test_images.reshape(-1, 28, 28, 1)
 
 # Train MNIST
-model_mnist.fit(train_images, train_labels, epochs=10, batch_size=32, validation_data=(test_images, test_labels))
+model_mnist.fit(train_images, train_labels, epochs=50, batch_size=32, validation_data=(test_images, test_labels))
 
 model_mnist.save("FineTuned_MNIST.h5")
 
@@ -40,21 +40,24 @@ test_images = (test_images.astype('float32') / 255) * 2 - 1
 #New model for CIFAR-10
 model_cifar10 = models.Sequential()
 
-# Modify first layer to acept img 32x32x3
+#Add cnv layers form 0 for CIFAR-10
 model_cifar10.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)))
+model_cifar10.add(layers.MaxPooling2D((2, 2)))
+model_cifar10.add(layers.Conv2D(64, (3, 3), activation='relu'))
+model_cifar10.add(layers.MaxPooling2D((2, 2)))
+model_cifar10.add(layers.Conv2D(128, (3, 3), activation='relu'))
+model_cifar10.add(layers.Flatten())
 
 # Copy middle layers of the pprevious model
-for layer in model_mnist.layers[1:-1]:  
+for layer in model_mnist.layers[-3:]: 
     model_cifar10.add(layer)
 
-# Add new exit layer
-model_cifar10.add(layers.Dense(10, activation='softmax', name="dense_cifar10"))
 
 model_cifar10.compile(optimizer=optimizers.Adam(learning_rate=0.001),
                       loss=losses.SparseCategoricalCrossentropy(from_logits=False),
                       metrics=['accuracy'])
 
 # Train in CIFAR-10
-model_cifar10.fit(train_images, train_labels, epochs=10, batch_size=32, validation_data=(test_images, test_labels))
+model_cifar10.fit(train_images, train_labels, epochs=50, batch_size=32, validation_data=(test_images, test_labels))
 
 model_cifar10.save("FineTuned_CIFAR10.h5")
