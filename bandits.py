@@ -35,7 +35,23 @@ def naive_algorithm(bandits, total_trials, explore_trials=10):
 
 
 def epsilon_greedy(bandits, total_trials, epsilon=0.1):
-    pass
+    rewards= []
+    
+    for t in range(total_trials):
+        if np.random.rand() < epsilon:
+            
+            chosen_bandit = np.random.randint(len(bandits))
+        
+        else:
+            
+            chosen_bandit= np.argmax([b.estimated_reward for b in bandits])
+            
+        reward = bandits[chosen_bandit].pull()
+        bandits[chosen_bandit].update(reward)
+        total_reward += reward
+        rewards[t]= total_reward
+        
+    return rewards
 
 
 # Parameters
