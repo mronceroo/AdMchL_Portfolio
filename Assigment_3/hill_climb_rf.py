@@ -155,14 +155,15 @@ def steepest_ascent_hill_climbing(initial_state, max_iterations=100):
         # Evaluate all neighbors and find the best one
         logger.info("Iteration %d: Evaluating %d neighbors.", iteration, len(neighbors))
         best_neighbor = None
-        best_neighbor_value = -float('inf')
+        best_neighbor_value = -float('inf') #start at the worst solution
         
+        #New thing for implementation
         for neighbor in neighbors:
             neighbor_value = objective_function(neighbor)
             logger.debug("Neighbor %s has score: %.4f", neighbor, neighbor_value)
 
             if neighbor_value > best_neighbor_value:
-                best_neighbor = neighbor
+                best_neighbor = neighbor# Upgrade the best global neigbor
                 best_neighbor_value = neighbor_value
                 
         # Only move if we found a better neighbor
@@ -170,6 +171,8 @@ def steepest_ascent_hill_climbing(initial_state, max_iterations=100):
             logger.info("Found better neighbor: %s with score: %.4f", best_neighbor, best_neighbor_value)   
             current_state = best_neighbor
             current_value = best_neighbor_value
+        
+        #End of the implementation
             
         # If no better neighbor is found, we've reached a peak
         if not found_better:
